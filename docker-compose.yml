@@ -1,0 +1,37 @@
+version: '3.3'
+networks:
+  stock-network:
+    driver: bridge
+services:
+  db:
+    image: mariadb:10.8.2
+    environment:
+      MYSQL_DATABASE: stockdb
+      MYSQL_USER: stock
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      #- ./mariadb:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+    networks:
+      - stock-network
+    # ports:
+    #   - "3307:3306"
+ 
+  app:
+    image: stock:v1
+    environment:
+      DB_HOST: db
+      DB_NAME: stockdb
+      DB_USER: stock
+      DB_PASSWORD: password
+      DB_PORT: 3306
+
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    networks:
+      - stock-network
+    depends_on:
+      - db

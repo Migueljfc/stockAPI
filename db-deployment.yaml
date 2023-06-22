@@ -1,0 +1,83 @@
+# Define a 'Persistent Volume Claim' (PVC) for MariaDB Storage, dynamically provisioned by cluster
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb-pv-claim
+  namespace: egs-ressellr
+spec:
+  accessModes:
+    - ReadWriteOnce   
+  resources:
+    requests:
+      storage: 500Mi    
+  storageClassName: longhorn
+
+---
+# Configure 'Deployment' of MariaDB server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stockdb
+  namespace: egs-ressellr
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: stockdb
+  template:
+    metadata:
+      labels: 
+        app: stockdb
+    spec:
+      containers:
+      - name: stockdb
+        image: mariadb:latest
+        ports:
+        - containerPort: 3306
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "10m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "password"
+        - name: MYSQL_USER
+          value: "stock"
+        - name: MYSQL_PASSWORD
+          value: "password"
+        - name: MYSQL_DATABASE 
+          value: "stockdb"
+        volumeMounts:
+        - name : init-script-stock
+          mountPath: /docker-entrypoint-initdb.d
+        - name: mariadb-persistent-storage-stock
+          mountPath: /var/lib/mysql
+  
+      volumes:
+      - name: init-script-stock
+        configMap:
+          name: mariadb-init-map
+      # - name: data-volume # Mounting 'volume' to the container
+      #   hostPath:
+      #     path: /home/miguel/Documents/stockAPI/data/mysql
+      - name: mariadb-persistent-storage-stock # Obtaining 'volume' from PVC
+        persistentVolumeClaim:
+          claimName: mariadb-pv-claim
+
+---
+# Define a 'Service' to expose MySQL to other services
+apiVersion: v1
+kind: Service
+metadata:
+  name: stockdb-service
+  namespace: egs-ressellr
+spec:
+  selector:
+    app: stockdb
+  ports:
+  - protocol: TCP
+    targetPort: 3306
+    port: 3306

@@ -1,0 +1,7 @@
+*.db
+app/*.json
+*.md
+*.yaml
+.gitignore
+data.sql
+DBDockerfile.txt

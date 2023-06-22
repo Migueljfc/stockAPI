@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Company App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to the Company App</h1>
+
+        <!-- Signup Form -->
+        <div id="signup-form">
+            <h2>Sign Up</h2>
+            <div id="signup-error" class="error"></div>
+            <div id="signup-success" class="success"></div>
+            <label for="signup-name">Company Name</label>
+            <input type="text" id="signup-name" placeholder="Enter company name">
+            <label for="signup-image">Company Image</label>
+            <input type="text" id="signup-image" placeholder="Enter company image URL">
+            <button id="signup-btn">Sign Up</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form">
+            <h2>Login</h2>
+            <div id="login-error" class="error"></div>
+            <label for="login-api-key">API Key</label>
+            <input type="text" id="login-api-key" placeholder="Enter API key">
+            <button id="login-btn">Login</button>
+        </div>
+
+        <!-- Products -->
+        <div id="products">
+            <h2>Products</h2>
+            <div id="products-list"></div>
+        </div>
+
+        <!-- Subscribe Form -->
+        <div id="subscribe-form">
+            <h2>Subscribe</h2>
+            <div id="subscribe-error" class="error"></div>
+            <div id="subscribe-success" class="success"></div>
+            <label for="subscribe-company-id">Company ID</label>
+            <input type="text" id="subscribe-company-id" placeholder="Enter company ID">
+            <button id="subscribe-btn">Subscribe</button>
+        </div>
+    </div>
+
+    <script>
+        const baseUrl = 'http://192.168.49.2:30000'; // Replace with your backend URL
+
+        // Signup form
+        const signupForm = document.getElementById('signup-form');
+        const signupError = document.getElementById('signup-error');
+        const signupSuccess = document.getElementById('signup-success');
+        const signupName = document.getElementById('signup-name');
+        const signupImage = document.getElementById('signup-image');
+        const signupBtn = document.getElementById('signup-btn');
+
+        signupBtn.addEventListener('click', () => {
+            const name = signupName.value;
+            const image = signupImage.value;
+
+            fetch(`${baseUrl}/stock/v1/companies`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, image })
+            })
+                .then(response => {
+                    if (response.status === 201) {
+                        signupError.textContent = '';
+                        signupSuccess.textContent = 'Sign up successful';
+                    } else {
+                        signupSuccess.textContent = '';
+                        signupError.textContent = 'Error signing up';
+                    }
+                })
+                .catch(error => {
+                    signupSuccess.textContent = '';
+                    signupError.textContent = 'Error signing up';
+                });
+        });
+
+        // Login form
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+        const loginApiKey = document.getElementById('login-api-key');
+        const loginBtn = document.getElementById('login-btn');
+
+        loginBtn.addEventListener('click', () => {
+            const apiKey = loginApiKey.value;
+
+            fetch(`${baseUrl}/stock/v1/categories?api_key=${apiKey}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        loginError.textContent = '';
+                        loginForm.style.display = 'none';
+                        products.style.display = 'block';
+                        // Products
+                        const products = document.getElementById('products');
+                        const productsList = document.getElementById('products-list');
+
+                        fetch(`${baseUrl}/stock/v1/products?api_key=${apiKey}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                data.forEach(product => {
+                                    const productElement = document.createElement('div');
+                                    productElement.textContent = product.name;
+                                    productsList.appendChild(productElement);
+                                });
+                            });
+                    } else {
+                        loginError.textContent = 'Invalid API key';
+                    }
+                })
+                .catch(error => {
+                    loginError.textContent = 'Error logging in';
+                });
+        });
+
+
+
+       /*  // Subscribe form
+        const subscribeForm = document.getElementById('subscribe-form');
+        const subscribeError = document.getElementById('subscribe-error');
+        const subscribeSuccess = document.getElementById('subscribe-success');
+        const subscribeCompanyId = document.getElementById('subscribe-company-id');
+        const subscribeBtn = document.getElementById('subscribe-btn');
+
+        subscribeBtn.addEventListener('click', () => {
+            const companyId = subscribeCompanyId.value;
+
+            fetch(`${baseUrl}/stock/v1/companies/${companyId}/subscribe`, {
+                method: 'PUT'
+            })
+                .then(response => {
+                    if (response.status === 202) {
+                        subscribeError.textContent = '';
+                        subscribeSuccess.textContent = 'Subscribed successfully';
+                    } else {
+                        subscribeSuccess.textContent = '';
+                        subscribeError.textContent = 'Error subscribing';
+                    }
+                })
+                .catch(error => {
+                    subscribeSuccess.textContent = '';
+                    subscribeError.textContent = 'Error subscribing';
+                });
+        }); */
+    </script>
+</body>
+
+</html>

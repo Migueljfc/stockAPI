@@ -1,0 +1,812 @@
+---
+openapi: 3.0.2
+info:
+  title: Stock API
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/Resellr/StockAPI/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://api.example.com/v1
+paths:
+  /stock/v1/categories:
+    get:
+      tags:
+      - categories
+      summary: Get Categories
+      operationId: get_categories_stock_v1_categories_get
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Limit
+          maximum: 50
+          minimum: 1
+          type: integer
+          default: 50
+      - name: offset
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Offset
+          minimum: 0
+          type: integer
+          default: 0
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Get Categories Stock V1 Categories Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - categories
+      summary: Create Category
+      operationId: create_category_stock_v1_categories_post
+      parameters:
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCategory'
+        required: true
+      responses:
+        "201":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /stock/v1/categories/{category_id}:
+    get:
+      tags:
+      - categories
+      summary: Get Category
+      operationId: get_category_stock_v1_categories__category_id__get
+      parameters:
+      - name: category_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Category Id
+          type: integer
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - categories
+      summary: Update Category
+      operationId: update_category_stock_v1_categories__category_id__put
+      parameters:
+      - name: category_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Category Id
+          type: integer
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCategory'
+        required: true
+      responses:
+        "202":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - categories
+      summary: Delete Category
+      operationId: delete_category_stock_v1_categories__category_id__delete
+      parameters:
+      - name: category_id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Category Id
+          type: integer
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      responses:
+        "204":
+          description: Successful Response
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /stock/v1/subcategories:
+    get:
+      tags:
+      - subcategories
+      summary: Get Subcategories
+      operationId: get_subcategories_stock_v1_subcategories_get
+      parameters:
+      - name: category_id
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Category Id
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Limit
+          maximum: 50
+          minimum: 1
+          type: integer
+          default: 50
+      - name: offset
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Offset
+          minimum: 0
+          type: integer
+          default: 0
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - subcategories
+      summary: Create Subcategory
+      operationId: create_subcategory_stock_v1_subcategories_post
+      parameters:
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewSubCategory'
+        required: true
+      responses:
+        "201":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubCategory'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /stock/v1/subcategories/{subcategoryId}:
+    get:
+      tags:
+      - subcategories
+      summary: Get Subcategory
+      operationId: get_subcategory_stock_v1_subcategories__subcategoryId__get
+      parameters:
+      - name: subcategoryId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Subcategoryid
+          type: integer
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubCategory'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - subcategories
+      summary: Update Subcategory
+      operationId: update_subcategory_stock_v1_subcategories__subcategoryId__put
+      parameters:
+      - name: subcategoryId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Subcategoryid
+          type: integer
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewSubCategory'
+        required: true
+      responses:
+        "202":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubCategory'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - subcategories
+      summary: Delete Subcategory
+      operationId: delete_subcategory_stock_v1_subcategories__subcategoryId__delete
+      parameters:
+      - name: subcategoryId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Subcategoryid
+          type: integer
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      responses:
+        "204":
+          description: Successful Response
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /stock/v1/products:
+    get:
+      tags:
+      - products
+      summary: Get Products
+      operationId: get_products_stock_v1_products_get
+      parameters:
+      - name: categoryId
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Categoryid
+          type: integer
+      - name: subcategoryId
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Subcategoryid
+          type: integer
+      - name: limit
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Limit
+          maximum: 50
+          minimum: 1
+          type: integer
+          default: 50
+      - name: offset
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          title: Offset
+          minimum: 0
+          type: integer
+          default: 0
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - products
+      summary: Create Product
+      operationId: create_product_stock_v1_products_post
+      parameters:
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProduct'
+        required: true
+      responses:
+        "201":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /stock/v1/products/{productId}:
+    get:
+      tags:
+      - products
+      summary: Get Product
+      operationId: get_product_stock_v1_products__productId__get
+      parameters:
+      - name: productId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Productid
+          type: integer
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - products
+      summary: Update Product
+      operationId: update_product_stock_v1_products__productId__put
+      parameters:
+      - name: productId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Productid
+          type: integer
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProduct'
+        required: true
+      responses:
+        "202":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    delete:
+      tags:
+      - products
+      summary: Delete Product
+      operationId: delete_product_stock_v1_products__productId__delete
+      parameters:
+      - name: productId
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          title: Productid
+          type: integer
+      - name: api_key
+        in: query
+        description: API Key
+        required: true
+        style: form
+        explode: true
+        schema:
+          title: Api Key
+          type: string
+          description: API Key
+      responses:
+        "204":
+          description: Successful Response
+        "422":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    Category:
+      title: Category
+      required:
+      - id
+      - name
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          description: The name of the category
+        id:
+          title: Id
+          type: integer
+          description: The ID of the category
+        image:
+          title: Image
+          type: string
+          description: The image url of the category
+          default: ""
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    NewCategory:
+      title: NewCategory
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          description: The name of the new category
+        image:
+          title: Image
+          type: string
+          description: The image url of the new category
+          default: ""
+    NewProduct:
+      title: NewProduct
+      required:
+      - category_id
+      - name
+      - subcategory_id
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          description: The name of the new product
+        description:
+          title: Description
+          type: string
+          description: The description of the new product
+          default: ""
+        category_id:
+          title: Category Id
+          type: integer
+          description: The ID of the category that the new product belongs to
+        subcategory_id:
+          title: Subcategory Id
+          type: integer
+          description: The ID of the subcategory that the product belongs to
+        image:
+          title: Image
+          type: string
+          description: The image url of the new product
+          default: ""
+    NewSubCategory:
+      title: NewSubCategory
+      required:
+      - category_id
+      - name
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          description: The name of the new subcategory
+        category_id:
+          title: Category Id
+          type: integer
+          description: The ID of the category that the new subcategory belongs to
+        image:
+          title: Image
+          type: string
+          description: The image url of the new subcategory
+          default: ""
+    Product:
+      title: Product
+      required:
+      - category_id
+      - id
+      - name
+      - subcategory_id
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          description: The name of the product
+        description:
+          title: Description
+          type: string
+          description: The description of the product
+          default: ""
+        id:
+          title: Id
+          type: integer
+          description: The ID of the product
+        category_id:
+          title: Category Id
+          type: integer
+          description: The ID of the category that the product belongs to
+        subcategory_id:
+          title: Subcategory Id
+          type: integer
+          description: The ID of the subcategory that the product belongs to
+        image:
+          title: Image
+          type: string
+          description: The image url of the product
+          default: ""
+    SubCategory:
+      title: SubCategory
+      required:
+      - category_id
+      - id
+      - name
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          description: The name of the subcategory
+        category_id:
+          title: Category Id
+          type: integer
+          description: The ID of the category that the subcategory belongs to
+        id:
+          title: Id
+          type: integer
+          description: The ID of the subcategory
+        image:
+          title: Image
+          type: string
+          description: The image url of the subcategory
+          default: ""
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
