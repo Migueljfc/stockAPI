@@ -1,34 +1,43 @@
-# Stock API
+# Stock API 🧩
+
+![Architecture](https://img.shields.io/badge/Architecture-Microservice-8A2BE2)
+![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=flat&logo=fastapi)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
 
 ## Table of Contents
+* [About](#about)
+* [Features](#features)
+* [Getting Started](#getting-started)
+* [Usage](#usage)
+* [Deployment](#deployment)
+* [Documentation](#documentation)
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Usage](#usage)
-- [Deployment](#deployment)
-- [Documentation](#documentation)
+## About
+The **Stock API** is a dedicated microservice responsible for the inventory and stock management. It acts as a decoupled service that provides seamless management of products, categories, and subcategories, allowing other components of the system to interact with stock data efficiently and reliably.
 
-## About <a name = "about"></a>
+## Features
+* 🧩 **Microservice Architecture:** Independent, containerized, and highly scalable within the cluster.
+* 📦 **Domain-Driven Design:** Strictly handles the bounded context of product and inventory management.
+* 🐳 **Container Native:** Ready to run out-of-the-box with Docker and Kubernetes.
+* ⚡ **High Performance:** Built with FastAPI for incredible speed and asynchronous RESTful communication.
 
-The Stock API is a powerful tool that enables seamless management of products, categories, and subcategories within a stock or inventory system. Designed to simplify and streamline stock management processes, this API provides a set of features for organizing and tracking products across various categories and subcategories.
-
-## Getting Started <a name = "getting_started"></a>
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+## Getting Started
+These instructions will get you a copy of the microservice up and running on your local machine for isolated development and testing. See [Deployment](#deployment) for notes on how to deploy it to the live cluster.
 
 ### Prerequisites
+Ensure you have the following installed on your machine:
+* Python 3.7+
+* Docker & Docker Compose (V2)
+* _Optional:_ MariaDB (if running outside of Docker)
 
-
+### Environment Variables
+For local development, ensure your database connection is properly configured. Create a `.env` file or export the following variables (update with your local credentials):
+```env
+DB_USER=root
+DB_PASSWORD=secret
+DB_HOST=db
 ```
-Python 3.7+
-FastAPI
-Uvicorn
-SQLAlchemy
-MariaDB
-Docker
-Docker Compose
-```
-
 ### Installing 
 
 
